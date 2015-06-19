@@ -1,0 +1,27 @@
+<div class='alert alert-success hidden' id='success-message'>Success</div>
+
+<%= simple_form_for(@report, url: update_employee_report_path(@report.access_token), html: { id: 'daily-report' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  <div class="row images-container">
+	  <div class='smiley-container'>
+      <%= image_tag "happy.png", :size => '80x60', class: 'report-smiley', "data-value" => 1 %>
+    </div>
+    <div class='smiley-container'>
+      <%= image_tag "neutral.png", :size => '80x60', class: 'report-smiley', "data-value" => 2 %>
+    </div>
+    <div class='smiley-container'>
+      <%= image_tag "sad.png", :size => '80x60', class: 'report-smiley', "data-value" => 3 %>
+    </div>
+  </div>
+  	
+
+    <%= f.input :score , as: :hidden, id: 'score-input' %>
+    <%= f.input :comment %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, type: 'button', "data-url" => update_employee_report_path(@report.access_token), id: 'js-update-report' %>
+  </div>
+<% end %>

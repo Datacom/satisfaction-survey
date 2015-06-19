@@ -1,0 +1,59 @@
+<div class="area"></div>
+  <nav class="main-menu">
+    <ul>
+      <li>
+          <a href="<%= root_path %>">
+          <i class="fa fa-tachometer fa-2x"></i>
+          <span class="nav-text">
+              Dashboard
+          </span>
+        </a>
+
+      </li>
+      <% if current_user %>
+      <li class="has-subnav">
+        <a href="<%= new_employee_path %>">
+          <i class="fa fa-plus-circle fa-2x"></i>
+          <span class="nav-text">
+              New Employee
+          </span>
+        </a>
+      </li>
+      <% end %>
+      <% if current_user.try(:admin?) %>
+      <li class="has-subnav">
+        <a href="<%= new_manager_path %>">
+          <i class="fa fa-plus-square fa-2x"></i>
+          <span class="nav-text">
+                            New Manager
+          </span>
+        </a>
+      </li>
+      <% end %>
+      <% if current_user.nil? %>
+      <li class="has-subnav">
+        <a href="<%= new_user_session_path %>">
+          <i class="fa fa-sign-in fa-2x"></i>
+          <span class="nav-text">
+                            Sign In
+                        </span>
+        </a>
+
+      </li>
+      <% end %>
+
+    </ul>
+      <% if current_user %>
+    <ul class="logout">
+      <li>
+        <%= link_to destroy_user_session_path, method: :delete do |link| %>  
+          <i class="fa fa-sign-out fa-2x"></i>
+          <span class="nav-text">
+                            Logout
+                        </span>
+                        <% end %>
+        </a>
+      </li>
+    </ul>
+    <%end%>
+  </nav>

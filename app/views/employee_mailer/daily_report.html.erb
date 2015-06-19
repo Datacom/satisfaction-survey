@@ -1,0 +1,13 @@
+Hi <%= @employee.name.split(" ")[0].camelize %>,
+<br/>
+<br/>
+Please click <%= link_to "here", employee_report_url(@report.access_token) %> and let me know how your day is going.
+<br/>
+<br/>
+Cheers,
+<br/>
+<br/>
+Meccedes
+
+
+<%#= User.find(@employee.user_id.to_i).name %>

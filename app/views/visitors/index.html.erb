@@ -1,0 +1,53 @@
+<% if current_user %>
+	<h3> <%= current_user.name.try(:camelize) %>, here are your employees. </h3>
+	<hr>
+	<% @employees.each do |employee| %>
+		<span class="clearfix">
+			<%= link_to employee.name.try(:camelize), employee_path(employee) %>
+		</span>
+	<% end %>
+	<hr>
+	<h3>Here are the departments </h3>
+	<table class = "table table-striped table-condensed table-hover">
+	<tr>
+		<th>Departmnent</th>
+		<th>Happy</th>
+		<th>Neutral</th>
+		<th>Sad</th>
+		<th>Total</th>
+		<th>Percentage Happy</th>
+		</tr>
+	<% @employees.map(&:unit).uniq.compact.each do |unit| %>
+	<% employees = Employee.where(unit: unit) %>
+	<tr>
+		<td><%= link_to unit.to_s, unit_show_path(name: unit) %></td>
+
+		<td><%= happy = employees.map{ |a| a.daily_reports.where(score: 1).count}.sum %></td>
+		<td><%= employees.map{ |a| a.daily_reports.where(score: 2).count}.sum %></td>
+		<td><%= employees.map{ |a| a.daily_reports.where(score: 3).count}.sum %></td>
+		<td><%= total = employees.map{ |a| a.daily_reports.where(score: [1,2,3]).count}.sum %></td>
+		<td><%= "#{(happy.to_f / total.to_f * 100).round(2)}%"  rescue 0 %></td>
+
+		</tr>
+	<% end %>
+	</table>
+<% end %>
+<hr>
+<h3> Daily snapshot of the team</h3>
+<table class="table table-condensed table-hover">
+	<% @todays_reports.in_groups_of(5) do |reports| %>
+		<tr>
+			<% reports.each do |report| %>
+				<% if report && report.completed? %>
+						<td>
+						<% if current_user %>
+					  		<%= link_to_if current_user, report.employee.name.try(:camelize), daily_report_path(report.id) %>
+					  		<% end %>
+					  		<%= faces(report) %>
+				  		</td>
+				  <% end %>	
+			<% end %>
+		</tr>
+	<% end %>
+</table>
+

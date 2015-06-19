@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+
+ <% employee = @employee.name.try(:camelize) %>
+ <h1><%= @employee.name.try(:camelize) %></h1>
+ <hr>
+ <br>
+<h2><%= @date.strftime("%B %y") %></h2>
+<hr>
+ <br>
+
+<%= link_to (@date - 1.month).strftime("%B"), employee_path(@employee.id, date: @date - 1.month) %>
+<%= link_to (@date + 1.month).strftime("%B"), employee_path(@employee.id, date: @date + 1.month) %>
+<%= bootstrap_calendar @date do |date| %>
+    <%= date.day.to_s %>
+    <%#= link_to_if current_user, @reports.on_day(date).completed.try(:first).employee.name.try(:camelize)), daily_report_path(@reports.on_day(date).completed.try(:first).id) %>
+    <% report = @reports.on_day(date).completed.try(:first) %>
+    <% if !report.nil? %>
+    	<%= link_to_if current_user, report.employee.name.try(:camelize), daily_report_path(report.id) %>
+    <% end %>
+    <%= faces(@reports.on_day(date).completed.try(:first), 50) unless @reports.on_day(date).completed.empty? %>
+<% end %>
+
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Back', employees_path %>

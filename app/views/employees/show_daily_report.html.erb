@@ -1,0 +1,8 @@
+	<div class="row">
+    <%= image_tag "happy.png" if @report.score == 1 %>
+    <%= image_tag "neutral.png" if @report.score == 2 %>
+    <%= image_tag "sad.png" if @report.score == 3 %>
+    <p> Employee: <%= Employee.find(@report.employee_id).name.camelize %> </p>
+    <p> Comment: <%= @report.comment %></p> 
+    <%= "Created at #{@report.created_at}" %>
+    </div>

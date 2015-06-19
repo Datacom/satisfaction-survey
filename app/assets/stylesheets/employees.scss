@@ -1,0 +1,25 @@
+// Place all the styles related to the employees controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.smiley-container {
+
+	&:hover {
+		border:1px solid #666;
+	}
+
+	&.selected {
+		border:10px solid #888;
+	}
+
+
+}
+
+.images-container {
+	width:250px;
+
+}
+
+.image_tag_header {
+	display:inline;
+}
